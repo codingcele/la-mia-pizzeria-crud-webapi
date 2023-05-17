@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Pizzeria da Cele</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/la_mia_pizzeria_static.styles.css" asp-append-version="true" />
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body style="background-image: url(https://www.dapino.it/wp-content/uploads/2021/05/Menu-pizzeria-sfondo.jpg); background-size: cover; background-attachment: fixed;">
+    <div id="navbarNav" class="d-flex flex-row justify-content-end bg-white" style="height: 4vh">
+        <ul class="navbar-nav d-flex flex-row" style="margin-right: 1vw;">
+            <li class="nav-item" style="margin-right: 1vw;">
+                <a class="nav-link" aria-current="page" href="@Url.Action("Index", "User")">Admin</a>
+            </li>
+            <!-- code omitted -->
+            <partial name="_LoginPartial" />
+        </ul>
+    </div>
+    <header class="d-flex justify-content-between align-items-center bg-white" style="height: 16vh">
+        <div style="padding: 1vw; font-size: 42px;">
+            <a class="navbar-brand" asp-area="" asp-controller="Pizzeria" asp-action="Index" style="font-size: inherit; color: black;">Pizzeria da <span style="color:red;">Cele</span></a>
+        </div>
+        <div style="font-size: 28px;">
+            <ul class="d-flex flex-row navbar-nav flex-grow-1">
+                <li class="nav-item" style="padding: 1vw;">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Pizzeria" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item" style="padding: 1vw;">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Pizzeria" asp-action="Privacy">Privacy</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main style="min-height: 58vh; margin-left: 5vw; margin-top: 7vh; margin-bottom: 7vh; max-width: 70vw; padding: 8vh 3vw; background-image: url(https://www.dapino.it/wp-content/uploads/2020/05/sfondo-pers-menu.jpg?id=5403) !important;">
+        @RenderBody()
+    </main>
+
+    <footer class="border-top footer text-muted py-4 px-2" style="height: 8vh; width: 100%; background-color:white;">
+        <div class="container">
+            &copy; 2023 - Pizzeria da <span style="color:red;">Cele</span> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -11,30 +11,43 @@ namespace la_mia_pizzeria_static.Controllers.Api
     [ApiController]
     public class PizzeriaController : ControllerBase
     {
+        private readonly PizzeriaContext _context;
+
+        public PizzeriaController(PizzeriaContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet]
         public IActionResult GetPizzas(string? str)
         {
-
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
-
-            using (PizzeriaContext context = new PizzeriaContext())
+            if (str == null)
             {
-                if (str == null)
-                {
-                    IQueryable<Pizza> pizzas = context.Pizza;
-                    return Ok(pizzas.ToList());
-                }
-
-                List<Pizza> pizze = context.Pizza.Where(pizze => pizze.Name.Contains(str)).ToList();
-
-                if (pizze.Count <= 0)
-                {
-                    return NotFound();
-                }
-
-                return Ok(pizze);
+                IQueryable<Pizza> pizzas = _context.Pizza;
+                return Ok(pizzas.ToList());
             }
+
+            List<Pizza> pizze = _context.Pizza.Where(pizze => pizze.Name.Contains(str)).ToList();
+
+            if (pizze.Count <= 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(pizze);
+        }
+
+        [HttpGet]
+        public IActionResult GetPizzaById(int id)
+        {
+            Pizza pizza = _context.Pizza.FirstOrDefault(p => p.Id == id);
+
+            if (pizza == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(pizza);
         }
     }
 }

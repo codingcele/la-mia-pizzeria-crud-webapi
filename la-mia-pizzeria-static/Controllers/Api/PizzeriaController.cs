@@ -37,7 +37,7 @@ namespace la_mia_pizzeria_static.Controllers.Api
             return Ok(pizze);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetPizzaById(int id)
         {
             Pizza pizza = _context.Pizza.FirstOrDefault(p => p.Id == id);
@@ -48,6 +48,24 @@ namespace la_mia_pizzeria_static.Controllers.Api
             }
 
             return Ok(pizza);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Pizza? pizzaToDelete = _context.Pizza.Where(pizza => pizza.Id == id).FirstOrDefault();
+                
+            if (pizzaToDelete != null)
+            {
+                _context.Pizza.Remove(pizzaToDelete);
+                _context.SaveChanges();
+                
+                return Ok("Post eliminato correttamente");
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }

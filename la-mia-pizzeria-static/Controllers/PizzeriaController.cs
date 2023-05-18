@@ -101,7 +101,7 @@ namespace la_mia_pizzeria_static
                     foreach (string selectedIngredientsId in data.SelectedIngredients)
                     {
                         int selectedIntIngredientId = int.Parse(selectedIngredientsId);
-                        Ingredient ingredient = context.Ingredients.Where(m => m.Id == selectedIntIngredientId).FirstOrDefault();
+                        Ingredient? ingredient = context.Ingredients.Where(m => m.Id == selectedIntIngredientId).FirstOrDefault();
                         pizzaToCreate.Ingredients.Add(ingredient);
                     }
                 }

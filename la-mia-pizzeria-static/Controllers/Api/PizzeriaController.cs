@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using NuGet.Packaging.Signing;
 using System.Net;
+using Azure;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace la_mia_pizzeria_static.Controllers.Api
 {
@@ -66,6 +69,41 @@ namespace la_mia_pizzeria_static.Controllers.Api
             {
                 return NotFound();
             }
+        }
+
+        [HttpPost]
+        public IActionResult CreaPizza([FromBody] Pizza data)
+        {
+            Pizza pizzaToCreate = new Pizza();
+            pizzaToCreate.Image = data.Image;
+            pizzaToCreate.Name = data.Name;
+            pizzaToCreate.Description = data.Description;
+            pizzaToCreate.Price = data.Price;
+
+            pizzaToCreate.PizzaCategoryId = data.PizzaCategoryId;
+
+
+
+            pizzaToCreate.Ingredients = new List<Ingredient>();
+
+
+
+            if (data != null && data.Ingredients != null)
+            {
+                foreach (Ingredient ingredient in data.Ingredients)
+                {
+                    Ingredient? ing = _context.Ingredients
+                                .Where(x => x.Id == ingredient.Id)
+                                .FirstOrDefault();
+                    pizzaToCreate.Ingredients.Add(ing);
+                }
+            }
+
+            _context.Pizza.Add(data);
+
+            _context.SaveChanges();
+
+            return Ok();
         }
     }
 }

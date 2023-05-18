@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace la_mia_pizzeria_static.Controllers.Api
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PizzeriaController : ControllerBase
     {
@@ -26,11 +26,11 @@ namespace la_mia_pizzeria_static.Controllers.Api
         {
             if (str == null)
             {
-                IQueryable<Pizza> pizzas = _context.Pizza;
+                IQueryable<Pizza> pizzas = _context.Pizza.Include(p => p.Ingredients).Include(p => p.PizzaCategory);
                 return Ok(pizzas.ToList());
             }
 
-            List<Pizza> pizze = _context.Pizza.Where(pizze => pizze.Name.Contains(str)).ToList();
+            List<Pizza> pizze = _context.Pizza.Include(p => p.Ingredients).Include(p => p.PizzaCategory).Where(pizze => pizze.Name.Contains(str)).ToList();
 
             if (pizze.Count <= 0)
             {
@@ -43,7 +43,7 @@ namespace la_mia_pizzeria_static.Controllers.Api
         [HttpGet("{id}")]
         public IActionResult GetPizzaById(int id)
         {
-            Pizza pizza = _context.Pizza.FirstOrDefault(p => p.Id == id);
+            Pizza? pizza = _context.Pizza.Include(p => p.Ingredients).Include(p => p.PizzaCategory).FirstOrDefault(p => p.Id == id);
 
             if (pizza == null)
             {
@@ -82,11 +82,7 @@ namespace la_mia_pizzeria_static.Controllers.Api
 
             pizzaToCreate.PizzaCategoryId = data.PizzaCategoryId;
 
-
-
             pizzaToCreate.Ingredients = new List<Ingredient>();
-
-
 
             if (data != null && data.Ingredients != null)
             {
@@ -104,6 +100,41 @@ namespace la_mia_pizzeria_static.Controllers.Api
             _context.SaveChanges();
 
             return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult ModificaPizza(int id, [FromBody] Pizza data)
+        {
+            Pizza? pizzaToEdit = _context.Pizza.Include(p => p.Ingredients).FirstOrDefault(p => p.Id == id);
+            if (pizzaToEdit == null)
+                return NotFound($"La pizza con id {id} non esiste!");
+            else
+            {
+                pizzaToEdit.Image = data.Image;
+                pizzaToEdit.Name = data.Name;
+                pizzaToEdit.Description = data.Description;
+                pizzaToEdit.Price = data.Price;
+                pizzaToEdit.Ingredients.Clear();
+
+                pizzaToEdit.PizzaCategoryId = data.PizzaCategoryId;
+
+                pizzaToEdit.Ingredients = new List<Ingredient>();
+
+                if (data != null && data.Ingredients != null)
+                {
+                    foreach (Ingredient ingredient in data.Ingredients)
+                    {
+                        Ingredient? ing = _context.Ingredients
+                                    .Where(x => x.Id == ingredient.Id)
+                                    .FirstOrDefault();
+                        pizzaToEdit.Ingredients.Add(ing);
+                    }
+                }
+
+                _context.SaveChanges();
+
+                return Ok();
+            }
         }
     }
 }

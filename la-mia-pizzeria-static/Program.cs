@@ -2,6 +2,7 @@ using la_mia_pizzeria_static;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using la_mia_pizzeria_static.Areas.Identity.Data;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<la_mia_pizzeria_static.PizzeriaContext>();
@@ -11,6 +12,11 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICustomLogger, CustomConsoleLogger>();
+
+//serve per evitare l'eccezione "System.Text.Json.JsonException: A possible object cycle was detected"
+//quando si caricano le entities collegate
+builder.Services.AddControllers()
+    .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 var app = builder.Build();
 

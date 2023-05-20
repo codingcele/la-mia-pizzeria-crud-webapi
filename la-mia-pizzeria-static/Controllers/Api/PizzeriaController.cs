@@ -84,7 +84,7 @@ namespace la_mia_pizzeria_static.Controllers.Api
 
             pizzaToCreate.Ingredients = new List<Ingredient>();
 
-            if (data != null && data.Ingredients != null)
+            if (data.Ingredients != null)
             {
                 foreach (Ingredient ingredient in data.Ingredients)
                 {

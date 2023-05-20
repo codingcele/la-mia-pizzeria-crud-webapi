@@ -9,12 +9,9 @@
             <div class="">
                 <h1 class="ml-6">Menù</h1>
             </div>
-            @if (User.IsInRole("ADMIN"))
-            {
-                <div class="col-2 d-flex justify-content-end text-center pl-4">
-                    <a href="@Url.Action("Create", "Pizzeria")" class="btn btn-primary">Aggiungi pizza</a>
-                </div>
-            }
+            <div class="col-2 d-flex justify-content-end text-center pl-4">
+                <a class="btn btn-primary" href="/Client/Create">Aggiungi pizza</a>
+            </div>
         </div>
     </div>
 

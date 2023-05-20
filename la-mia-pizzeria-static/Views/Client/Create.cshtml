@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Aggiungi pizza";
+    Layout = "_Layout";
+}
+
+
+<div class="container">
+    <div class="mb-3">
+        <strong>Nome:</strong>
+        <input id="pizzaName" class="d-block w-100" />
+        <span id="pizzaNameValidation" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <strong>Immagie:</strong>
+        <input id="pizzaImage" class="d-block w-100" />
+        <span id="pizzaImageValidation" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <strong>Descrizione:</strong>
+        <input id="pizzaDescription" class="d-block w-100" />
+        <span id="pizzaDescriptionValidation" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <strong>Prezzo:</strong>
+        <input id="pizzaPrice" class="d-block w-100" />
+        <span id="pizzaPriceValidation" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <strong>Categoria:</strong>
+        <select id="pizzaCategory" rows="10" class="d-block w-100">
+        </select>
+    </div>
+    <div class="text-end">
+        <input type="button" class="btn btn-small btn-info" value="Aggiungi pizza" onclick="creaPizza()">
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/API/create.js"></script>
+}

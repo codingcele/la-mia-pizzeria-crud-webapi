@@ -33,9 +33,9 @@ function loadPizzas(searchKey) {
                                     ${pizza.price} &euro;
                                 </div>
                                 <div class="col-3 text-center pl-4">
-                                    <a href="/Client/Edit?id=${pizza.Id}" class="btn" style="background-color:green; color:white;">Modifica</a>
-                                    <a href="/Client/Details?id=${pizza.Id}" class="btn btn-primary">Dettagli</a><form asp-controller="Pizzeria" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
-                                    <a class="btn btn-danger" onclick="deletePizza(${pizza.Id}">Elimina</a>
+                                    <a href="/Client/Edit?id=${pizza.id}" class="btn" style="background-color:green; color:white;">Modifica</a>
+                                    <a href="/Client/Details?id=${pizza.id}" class="btn btn-primary">Dettagli</a><form asp-controller="Pizzeria" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
+                                    <a class="btn btn-danger" onclick="deletePizza(${pizza.id})">Elimina</a>
                                 </div>
                             </div>
                         </div>
@@ -48,4 +48,19 @@ function loadPizzas(searchKey) {
             alert('errore nella richiesta');
         });
 
+}
+
+
+function deletePizza(pizzaId) {
+    const isDelete = confirm('Sei sicuro?');
+    if (isDelete) {
+        axios.delete(`/api/Pizzeria/${pizzaId}`)
+            .then((res) => {        //se la richiesta va a buon fine
+                loadPizzas();
+            })
+            .catch((res) => {       //se la richiesta non è andata a buon fine
+                console.error('errore', res);
+                alert('errore nella richiesta');
+            });
+    }
 }

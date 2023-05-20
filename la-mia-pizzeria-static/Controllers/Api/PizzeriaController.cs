@@ -63,7 +63,7 @@ namespace la_mia_pizzeria_static.Controllers.Api
                 _context.Pizza.Remove(pizzaToDelete);
                 _context.SaveChanges();
                 
-                return Ok("Post eliminato correttamente");
+                return Ok("Pizza eliminata correttamente");
             }
             else
             {

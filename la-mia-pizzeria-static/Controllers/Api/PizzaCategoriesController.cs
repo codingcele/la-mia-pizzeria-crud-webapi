@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace la_mia_pizzeria_static.Controllers.Api
+namespace la_mia_pizzeria_static
 {
     [Route("api/[controller]")]
     [ApiController]

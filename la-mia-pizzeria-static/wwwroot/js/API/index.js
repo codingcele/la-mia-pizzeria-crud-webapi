@@ -45,7 +45,7 @@ function loadPizzas(searchKey) {
         })
         .catch((res) => {       //se la richiesta non è andata a buon fine
             console.error('errore', res);
-            alert('errore nella richiesta');
+            alert('errore lista pizze');
         });
 
 }
@@ -60,7 +60,7 @@ function deletePizza(pizzaId) {
             })
             .catch((res) => {       //se la richiesta non è andata a buon fine
                 console.error('errore', res);
-                alert('errore nella richiesta');
+                alert('errore eliminazione pizza');
             });
     }
 }

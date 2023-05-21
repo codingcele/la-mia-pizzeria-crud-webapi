@@ -17,7 +17,7 @@ namespace la_mia_pizzeria_static
 
         public override string FormatErrorMessage(string name)
         {
-            return "Inserisci almeno 5 parole";
+            return "Inserisci almeno 3 parole";
         }
     }
 }

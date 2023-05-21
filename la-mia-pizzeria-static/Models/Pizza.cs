@@ -20,7 +20,7 @@ namespace la_mia_pizzeria_static
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Il campo è obbligatorio")]
-        [StringLength(200, ErrorMessage = "Gli ingredienti non possono avere più di 200 caratteri")]
+        [StringLength(200, ErrorMessage = "La descrizione non può avere più di 200 caratteri")]
         [DescriptionMin3Words(ErrorMessage = "La descrizione deve contenere almeno 3 parole.")]
         public string Description { get; set; }
 

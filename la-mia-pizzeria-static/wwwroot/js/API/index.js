@@ -3,7 +3,7 @@
 function loadPizzas(searchKey) {
     axios.get('/api/Pizzeria', {
         params: {
-            search: searchKey
+            str: searchKey
         }
     })
         .then((res) => {        //se la richiesta va a buon fine

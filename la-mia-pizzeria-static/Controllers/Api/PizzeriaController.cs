@@ -24,20 +24,15 @@ namespace la_mia_pizzeria_static.Controllers.Api
         [HttpGet]
         public IActionResult GetPizzas(string? str)
         {
-            if (str == null)
+            List<Pizza> pizzas;
+            pizzas = _context.Pizza.Include(p => p.Ingredients).Include(p => p.PizzaCategory).ToList<Pizza>();
+            
+            if (str != null)
             {
-                IQueryable<Pizza> pizzas = _context.Pizza.Include(p => p.Ingredients).Include(p => p.PizzaCategory);
-                return Ok(pizzas.ToList());
+                pizzas = pizzas.Where(pizza => pizza.Name.ToLower().Contains(str.ToLower())).ToList();
             }
 
-            List<Pizza> pizze = _context.Pizza.Include(p => p.Ingredients).Include(p => p.PizzaCategory).Where(pizze => pizze.Name.Contains(str)).ToList();
-
-            if (pizze.Count <= 0)
-            {
-                return NotFound();
-            }
-
-            return Ok(pizze);
+            return Ok(pizzas);
         }
 
         [HttpGet("{id}")]
